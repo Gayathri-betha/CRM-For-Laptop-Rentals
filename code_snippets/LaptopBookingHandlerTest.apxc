@@ -1,0 +1,27 @@
+public class LaptopBookingHandlerTest {
+
+    @isTest
+    static void testSendEmailNotification() {
+        // Start test context
+        Test.startTest();
+
+        // Create test data
+        Laptop_Bookings_c booking1 = new Laptop_Bookings_c(
+            Email__c = 'test1@example.com',
+            Amount__c = 1500.00,
+            Core_Type__c = 'i7',
+            Laptop_Names__c = 'dell'
+        );
+
+        insert booking1;
+
+        // Call the method
+        LaptopBookingHandler.sendEmailNotification(new List<Laptop_Bookings__c>{booking1});
+
+        // Stop test context
+        Test.stopTest();
+
+        // Verify email was sent
+        System.assertEquals(1, Limits.getEmailInvocations(), 'One email should have been sent.');
+    }
+}
